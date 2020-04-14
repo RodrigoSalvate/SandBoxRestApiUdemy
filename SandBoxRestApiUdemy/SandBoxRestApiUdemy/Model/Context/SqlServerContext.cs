@@ -13,7 +13,7 @@ namespace SandBoxRestApiUdemy.Model.Context
 
         }
 
-        public SqlServerContext(DbContextOptions<SqlServerContext> options) : base() {}
+        public SqlServerContext(DbContextOptions<SqlServerContext> options) : base(options) {}
 
         public DbSet<Person> Persons { get; set; }
 

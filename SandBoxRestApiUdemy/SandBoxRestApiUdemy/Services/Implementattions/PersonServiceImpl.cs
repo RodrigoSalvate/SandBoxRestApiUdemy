@@ -1,55 +1,84 @@
 ﻿using SandBoxRestApiUdemy.Model;
+using SandBoxRestApiUdemy.Model.Context;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace SandBoxRestApiUdemy.Services.Implementattions
 {
     public class PersonServiceImpl : IPersonService
     {
+        private SqlServerContext _context;
+
+        public PersonServiceImpl(SqlServerContext context)
+        {
+            _context = context;
+        }
+
         public Person Create(Person person)
         {
+            try
+            {
+                _context.Add(person);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
             return person;
         }
 
-        public void Delete(long id)
+        public void Delete(int id)
         {
+            var result = _context.Persons.SingleOrDefault(s => s.Id.Equals(id));
+
+            try
+            {
+                if (result != null) _context.Persons.Remove(result);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public List<Person> FindAll()
         {
-            List<Person> persons = new List<Person>();
-
-            for (int i = 0; i < 8; i++)
-            {
-                persons.Add(new Person()
-                {
-                    Id = i,
-                    FirstName = "Rodrigo - " + i,
-                    LastName = "Salvate Brasil",
-                    Address = "Rio de Janeiro/RJ",
-                    Gender = "Male"
-                });
-            }
-
-            return persons;
+            return _context.Persons.ToList();
         }
 
-        public Person FindById(long id)
+        public Person FindById(int id)
         {
-            return new Person()
-            {
-                Id = 1,
-                FirstName = "Rodrigo",
-                LastName = "Salvate Brasil",
-                Address = "Rio de Janeiro/RJ",
-                Gender = "Male"
-            };
+            return _context.Persons.SingleOrDefault(s => s.Id.Equals(id));
         }
 
         public Person Update(Person person)
         {
+            if (!Exist(person.Id)) return new Person();
+
+            var result = _context.Persons.SingleOrDefault(s => s.Id.Equals(person.Id));
+
+            try
+            {
+                _context.Entry(result).CurrentValues.SetValues(person);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
             return person;
+        }
+
+        private bool Exist(int? id)
+        {
+            return _context.Persons.Any(a => a.Id == id);
         }
     }
 }

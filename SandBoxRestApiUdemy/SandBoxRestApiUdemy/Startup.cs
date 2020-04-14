@@ -33,6 +33,11 @@ namespace SandBoxRestApiUdemy
 
             services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+            services.AddApiVersioning();
+
+
             services.AddScoped<IPersonService, PersonServiceImpl>();
         }
 

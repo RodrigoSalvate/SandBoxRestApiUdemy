@@ -1,44 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using SandBoxRestApiUdemy.Business;
+using SandBoxRestApiUdemy.Business.Implementattions;
 using SandBoxRestApiUdemy.Model.Context;
-using SandBoxRestApiUdemy.Services;
-using SandBoxRestApiUdemy.Services.Implementattions;
+using SandBoxRestApiUdemy.Repository;
+using SandBoxRestApiUdemy.Repository.Implementattions;
 
 namespace SandBoxRestApiUdemy
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        private readonly ILogger _logger;
+        public IHostingEnvironment _environment { get; }
+        public IConfiguration _configuration { get; }
 
-        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration, IHostingEnvironment environment, ILogger<Startup> logger)
+        {
+            _configuration = configuration;
+            _logger = logger;
+            _environment = environment;
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = Configuration["SqlServerConnection:SqlServerConnectionString"];
+            var connectionString = _configuration["SqlServerConnection:SqlServerConnectionString"];
 
-            services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(connectionString));
+
+            if (_environment.IsDevelopment())
+            {
+                try
+                {
+                    var evolveConnection = new System.Data.SqlClient.SqlConnection(connectionString);
+
+                    var evolve = new Evolve.Evolve(evolveConnection, msg => _logger.LogInformation(msg))
+                    {
+                        IsEraseDisabled = true
+                    };
+
+                    evolve.Migrate();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogCritical("Database Migration failed.", ex);
+
+                    throw;
+                }
+            }
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
 
             services.AddApiVersioning();
 
-
-            services.AddScoped<IPersonService, PersonServiceImpl>();
+            services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

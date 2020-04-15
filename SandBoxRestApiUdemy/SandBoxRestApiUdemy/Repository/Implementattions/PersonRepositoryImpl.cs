@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SandBoxRestApiUdemy.Services.Implementattions
+namespace SandBoxRestApiUdemy.Repository.Implementattions
 {
-    public class PersonServiceImpl : IPersonService
+    public class PersonRepositoryImpl : IPersonRepository
     {
         private SqlServerContext _context;
 
-        public PersonServiceImpl(SqlServerContext context)
+        public PersonRepositoryImpl(SqlServerContext context)
         {
             _context = context;
         }
@@ -58,7 +58,7 @@ namespace SandBoxRestApiUdemy.Services.Implementattions
 
         public Person Update(Person person)
         {
-            if (!Exist(person.Id)) return new Person();
+            if (!Exist(person.Id)) return null;
 
             var result = _context.Persons.SingleOrDefault(s => s.Id.Equals(person.Id));
 
@@ -76,7 +76,7 @@ namespace SandBoxRestApiUdemy.Services.Implementattions
             return person;
         }
 
-        private bool Exist(int? id)
+        public bool Exist(int? id)
         {
             return _context.Persons.Any(a => a.Id == id);
         }

@@ -1,6 +1,7 @@
 ﻿using SandBoxRestApiUdemy.Model;
 using SandBoxRestApiUdemy.Model.Context;
 using SandBoxRestApiUdemy.Repository;
+using SandBoxRestApiUdemy.Repository.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace SandBoxRestApiUdemy.Business.Implementattions
     /// </summary>
     public class PersonBusinessImpl : IPersonBusiness
     {
-        private IPersonRepository _repository;
+        private IRepository<Person> _repository;
 
-        public PersonBusinessImpl(IPersonRepository repositoy)
+        public PersonBusinessImpl(IRepository<Person> repositoy)
         {
             _repository = repositoy;
         }

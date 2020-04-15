@@ -9,8 +9,7 @@ using Microsoft.Extensions.Logging;
 using SandBoxRestApiUdemy.Business;
 using SandBoxRestApiUdemy.Business.Implementattions;
 using SandBoxRestApiUdemy.Model.Context;
-using SandBoxRestApiUdemy.Repository;
-using SandBoxRestApiUdemy.Repository.Implementattions;
+using SandBoxRestApiUdemy.Repository.Generic;
 
 namespace SandBoxRestApiUdemy
 {
@@ -60,7 +59,9 @@ namespace SandBoxRestApiUdemy
             services.AddApiVersioning();
 
             services.AddScoped<IPersonBusiness, PersonBusinessImpl>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImpl>();
+            services.AddScoped<IBookBusiness, BookBusinessImpl>();
+
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

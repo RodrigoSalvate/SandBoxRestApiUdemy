@@ -17,6 +17,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
+    <PackageReference Include="Tapioca.HATEOAS" Version="1.0.4" />
   </ItemGroup>
 
 </Project>

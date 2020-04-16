@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SandBoxRestApiUdemy.Business;
 using SandBoxRestApiUdemy.Data.VO;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Collections.Generic;
+using Tapioca.HATEOAS;
+using System;
 
 namespace SandBoxRestApiUdemy.Controllers
 {
@@ -17,12 +21,23 @@ namespace SandBoxRestApiUdemy.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [SwaggerResponse((200), Type = typeof(List<PersonVO>))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
         public IActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]        
+        [SwaggerResponse((200), Type = typeof(PersonVO))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [SwaggerResponse(404)]
         public IActionResult Get(int id)
         {
             var person = _personBusiness.FindById(id);
@@ -31,16 +46,24 @@ namespace SandBoxRestApiUdemy.Controllers
 
             return Ok(person);
         }
-        
+
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [SwaggerResponse((201), Type = typeof(PersonVO))]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
 
-             return new ObjectResult(_personBusiness.Create(person));
+            return new ObjectResult(_personBusiness.Create(person));
         }
-        
+
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [SwaggerResponse((202), Type = typeof(PersonVO))]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -49,6 +72,10 @@ namespace SandBoxRestApiUdemy.Controllers
         }
 
         [HttpDelete("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
         public IActionResult Delete(int id)
         {
             _personBusiness.Delete(id);

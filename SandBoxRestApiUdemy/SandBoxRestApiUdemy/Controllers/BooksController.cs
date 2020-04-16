@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SandBoxRestApiUdemy.Business;
 using SandBoxRestApiUdemy.Data.VO;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Collections.Generic;
 
 namespace SandBoxRestApiUdemy.Controllers
 {
@@ -17,12 +19,21 @@ namespace SandBoxRestApiUdemy.Controllers
         }
 
         [HttpGet]
+        [SwaggerResponse((200), Type = typeof(List<BookVO>))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
         public IActionResult Get()
         {
             return Ok(_bookBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [SwaggerResponse((200), Type = typeof(BookVO))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [SwaggerResponse(404)]
         public IActionResult Get(int id)
         {
             var book = _bookBusiness.FindById(id);
@@ -33,6 +44,9 @@ namespace SandBoxRestApiUdemy.Controllers
         }
 
         [HttpPost]
+        [SwaggerResponse((201), Type = typeof(BookVO))]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
         public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -41,6 +55,9 @@ namespace SandBoxRestApiUdemy.Controllers
         }
 
         [HttpPut]
+        [SwaggerResponse((202), Type = typeof(BookVO))]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
         public IActionResult Put([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -49,6 +66,9 @@ namespace SandBoxRestApiUdemy.Controllers
         }
 
         [HttpDelete("{id}")]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
         public IActionResult Delete(int id)
         {
             _bookBusiness.Delete(id);

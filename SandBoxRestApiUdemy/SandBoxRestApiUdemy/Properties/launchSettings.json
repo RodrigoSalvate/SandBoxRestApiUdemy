@@ -11,16 +11,14 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "api/persons/v1",
+      "launchBrowser": true,      
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "SandBoxRestApiUdemy": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "api/persons/v1",
+      "launchBrowser": true,      
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

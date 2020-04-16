@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SandBoxRestApiUdemy.Business;
-using SandBoxRestApiUdemy.Model;
+using SandBoxRestApiUdemy.Data.VO;
 
 namespace SandBoxRestApiUdemy.Controllers
 {
@@ -25,27 +25,27 @@ namespace SandBoxRestApiUdemy.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var person = _bookBusiness.FindById(id);
+            var book = _bookBusiness.FindById(id);
 
-            if (person == null) return NotFound();
+            if (book == null) return NotFound();
 
-            return Ok(person);
+            return Ok(book);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Book person)
+        public IActionResult Post([FromBody] BookVO book)
         {
-            if (person == null) return BadRequest();
+            if (book == null) return BadRequest();
 
-            return new ObjectResult(_bookBusiness.Create(person));
+            return new ObjectResult(_bookBusiness.Create(book));
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Book person)
+        public IActionResult Put([FromBody] BookVO book)
         {
-            if (person == null) return BadRequest();
+            if (book == null) return BadRequest();
 
-            return new ObjectResult(_bookBusiness.Update(person));
+            return new ObjectResult(_bookBusiness.Update(book));
         }
 
         [HttpDelete("{id}")]

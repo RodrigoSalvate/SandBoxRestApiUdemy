@@ -1,17 +1,15 @@
-﻿using SandBoxRestApiUdemy.Model;
-using System;
+﻿using SandBoxRestApiUdemy.Data.VO;
 using System.Collections.Generic;
-using System.Linq;
 
 
 namespace SandBoxRestApiUdemy.Business
 {
     public interface IPersonBusiness
     {
-        Person Create(Person person);
-        Person FindById(int id);
-        List<Person> FindAll();
-        Person Update(Person person);
+        PersonVO Create(PersonVO personVO);
+        PersonVO FindById(int id);
+        List<PersonVO> FindAll();
+        PersonVO Update(PersonVO personVO);
         void Delete(int id);
     }
 }

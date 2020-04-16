@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SandBoxRestApiUdemy.Business;
-using SandBoxRestApiUdemy.Model;
+using SandBoxRestApiUdemy.Data.VO;
 
 namespace SandBoxRestApiUdemy.Controllers
 {
-
     [ApiVersion("1")]
     [Route("api/[controller]/v{version:apiVersion}")]
     [ApiController]
@@ -34,15 +33,15 @@ namespace SandBoxRestApiUdemy.Controllers
         }
         
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
 
-            return new ObjectResult(_personBusiness.Create(person));
+             return new ObjectResult(_personBusiness.Create(person));
         }
         
         [HttpPut]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
 

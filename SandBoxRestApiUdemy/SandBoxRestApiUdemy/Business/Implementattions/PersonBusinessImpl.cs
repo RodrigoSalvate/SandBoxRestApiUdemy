@@ -1,10 +1,8 @@
-﻿using SandBoxRestApiUdemy.Model;
-using SandBoxRestApiUdemy.Model.Context;
-using SandBoxRestApiUdemy.Repository;
+﻿using SandBoxRestApiUdemy.Data.Converters;
+using SandBoxRestApiUdemy.Data.VO;
+using SandBoxRestApiUdemy.Model;
 using SandBoxRestApiUdemy.Repository.Generic;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SandBoxRestApiUdemy.Business.Implementattions
 {
@@ -14,15 +12,19 @@ namespace SandBoxRestApiUdemy.Business.Implementattions
     public class PersonBusinessImpl : IPersonBusiness
     {
         private IRepository<Person> _repository;
+        private readonly PersonConverter _converter;
 
         public PersonBusinessImpl(IRepository<Person> repositoy)
         {
             _repository = repositoy;
+            _converter = new PersonConverter();
         }
 
-        public Person Create(Person person)
+        public PersonVO Create(PersonVO PersonVO)
         {
-            return _repository.Create(person);
+            var personEntity = _repository.Create(_converter.Parse(PersonVO));
+
+            return _converter.Parse(personEntity);
         }
 
         public void Delete(int id)
@@ -30,19 +32,21 @@ namespace SandBoxRestApiUdemy.Business.Implementattions
             _repository.Delete(id);
         }
 
-        public List<Person> FindAll()
+        public List<PersonVO> FindAll()
         {
-            return _repository.FindAll();
+            return _converter.ParseList(_repository.FindAll());
         }
 
-        public Person FindById(int id)
+        public PersonVO FindById(int id)
         {
-            return _repository.FindById(id);
+            return _converter.Parse(_repository.FindById(id));
         }
 
-        public Person Update(Person person)
+        public PersonVO Update(PersonVO PersonVO)
         {
-            return _repository.Update(person);
+            var personEntity = _repository.Update(_converter.Parse(PersonVO));
+
+            return _converter.Parse(personEntity);
         }
     }
 }

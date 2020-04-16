@@ -1,17 +1,14 @@
-﻿using SandBoxRestApiUdemy.Model;
-using System;
+﻿using SandBoxRestApiUdemy.Data.VO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SandBoxRestApiUdemy.Business
 {
     public interface IBookBusiness
     {
-        Book Create(Book person);
-        Book FindById(int id);
-        List<Book> FindAll();
-        Book Update(Book person);
+        BookVO Create(BookVO person);
+        BookVO FindById(int id);
+        List<BookVO> FindAll();
+        BookVO Update(BookVO person);
         void Delete(int id);
     }
 }

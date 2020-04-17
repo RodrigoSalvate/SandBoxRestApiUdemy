@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SandBoxRestApiUdemy.Business;
 using SandBoxRestApiUdemy.Data.VO;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -23,6 +24,7 @@ namespace SandBoxRestApiUdemy.Controllers
         [SwaggerResponse(204)]
         [SwaggerResponse(400)]
         [SwaggerResponse(401)]
+        [Authorize("Bearer")]
         public IActionResult Get()
         {
             return Ok(_bookBusiness.FindAll());
@@ -34,6 +36,7 @@ namespace SandBoxRestApiUdemy.Controllers
         [SwaggerResponse(400)]
         [SwaggerResponse(401)]
         [SwaggerResponse(404)]
+        [Authorize("Bearer")]
         public IActionResult Get(int id)
         {
             var book = _bookBusiness.FindById(id);
@@ -47,6 +50,7 @@ namespace SandBoxRestApiUdemy.Controllers
         [SwaggerResponse((201), Type = typeof(BookVO))]
         [SwaggerResponse(400)]
         [SwaggerResponse(401)]
+        [Authorize("Bearer")]
         public IActionResult Post([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -58,6 +62,7 @@ namespace SandBoxRestApiUdemy.Controllers
         [SwaggerResponse((202), Type = typeof(BookVO))]
         [SwaggerResponse(400)]
         [SwaggerResponse(401)]
+        [Authorize("Bearer")]
         public IActionResult Put([FromBody] BookVO book)
         {
             if (book == null) return BadRequest();
@@ -69,6 +74,7 @@ namespace SandBoxRestApiUdemy.Controllers
         [SwaggerResponse(204)]
         [SwaggerResponse(400)]
         [SwaggerResponse(401)]
+        [Authorize("Bearer")]
         public IActionResult Delete(int id)
         {
             _bookBusiness.Delete(id);

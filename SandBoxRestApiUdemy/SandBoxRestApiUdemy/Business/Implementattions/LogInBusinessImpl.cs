@@ -1,4 +1,4 @@
-﻿using SandBoxRestApiUdemy.Model;
+﻿using SandBoxRestApiUdemy.Data.VO;
 using SandBoxRestApiUdemy.Repository;
 using SandBoxRestApiUdemy.Security.Configuration;
 using System;
@@ -21,7 +21,7 @@ namespace SandBoxRestApiUdemy.Business.Implementattions
             _tokenConfiguration = tokenConfiguration;
         }
 
-        public object FindByLogIn(User user)
+        public object FindByLogIn(UserVO user)
         {
             bool credentialsIsValid = false;
 

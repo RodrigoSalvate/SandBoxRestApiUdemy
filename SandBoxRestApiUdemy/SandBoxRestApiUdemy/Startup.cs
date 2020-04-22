@@ -119,6 +119,7 @@ namespace SandBoxRestApiUdemy
             services.AddScoped<ILogInBusiness, LogInBusinessImpl>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
         }
 

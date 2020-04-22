@@ -9,7 +9,7 @@ namespace SandBoxRestApiUdemy.Repository.Generic
 {
     public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly SqlServerContext _context;
+        protected readonly SqlServerContext _context;
         private DbSet<T> dbSet;
 
         public GenericRepository(SqlServerContext context)
@@ -62,6 +62,16 @@ namespace SandBoxRestApiUdemy.Repository.Generic
         public T FindById(int id)
         {
             return dbSet.SingleOrDefault(s => s.Id.Equals(id));
+        }
+
+        public List<T> FindWithPagedSearch(string query)
+        {
+            return dbSet.FromSql<T>(query).ToList();
+        }
+
+        public int GetCount(string query)
+        {
+            return dbSet.FromSql<T>(query).Count();
         }
 
         public T Update(T entity)

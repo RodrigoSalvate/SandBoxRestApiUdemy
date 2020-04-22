@@ -1,10 +1,9 @@
-﻿using SandBoxRestApiUdemy.Model;
-using System;
+﻿using SandBoxRestApiUdemy.Data.VO;
 
 namespace SandBoxRestApiUdemy.Business
 {
     public interface ILogInBusiness
     {
-        object FindByLogIn(User login);
+        object FindByLogIn(UserVO login);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SandBoxRestApiUdemy.Business;
-using SandBoxRestApiUdemy.Model;
+using SandBoxRestApiUdemy.Data.VO;
 
 namespace SandBoxRestApiUdemy.Controllers
 {
@@ -19,7 +19,7 @@ namespace SandBoxRestApiUdemy.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public object Post([FromBody] User user)
+        public object Post([FromBody] UserVO user)
         {
             if (user == null) return BadRequest();
 

@@ -11,6 +11,8 @@ namespace SandBoxRestApiUdemy.Repository.Generic
         T Create(T entity);
         T FindById(int id);
         List<T> FindAll();
+        List<T> FindWithPagedSearch(string query);
+        int GetCount(string query);
         T Update(T entity);
         void Delete(int id);
         bool Exist(int? id);

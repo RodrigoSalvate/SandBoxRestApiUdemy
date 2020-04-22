@@ -33,8 +33,32 @@ namespace SandBoxRestApiUdemy.Controllers
             return Ok(_personBusiness.FindAll());
         }
 
+        [HttpGet("Find-by-name")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [SwaggerResponse((200), Type = typeof(List<PersonVO>))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [Authorize("Bearer")]
+        public IActionResult GetByName([FromQuery] string firstName, [FromQuery] string lastName)
+        {
+            return Ok(_personBusiness.FindByName(firstName, lastName));
+        }
+
+        [HttpGet("Get-With-paged-search/{sortDirection}/{pageSize}/{page}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        [SwaggerResponse((200), Type = typeof(List<PersonVO>))]
+        [SwaggerResponse(204)]
+        [SwaggerResponse(400)]
+        [SwaggerResponse(401)]
+        [Authorize("Bearer")]
+        public IActionResult GetPagedSearch([FromQuery] string name, string sortDirection, int pageSize, int page)
+        {
+            return Ok(_personBusiness.FindWithPagedSearch(name, sortDirection, pageSize, page));
+        }
+
         [HttpGet("{id}")]
-        [TypeFilter(typeof(HyperMediaFilter))]        
+        [TypeFilter(typeof(HyperMediaFilter))]
         [SwaggerResponse((200), Type = typeof(PersonVO))]
         [SwaggerResponse(204)]
         [SwaggerResponse(400)]

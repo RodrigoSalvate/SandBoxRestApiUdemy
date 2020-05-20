@@ -1,6 +1,6 @@
 {
   "Evolve.Database": "sqlserver",
-  "Evolve.ConnectionString": "SERVER=192.168.99.100;Port=3306;Database=rest_aspnet_udemy;Uid=root;Pwd=Your_password123;SslMode=none;",
+  "Evolve.ConnectionString": "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\Projetos C#\\SandBoxRestAPIUdemy\\SandBoxRestApiUdemy\\rest_aspnet_udemy.mdf;Integrated Security=True;Connect Timeout=30",
   "Evolve.Locations": "Sql_Scripts",
-  "Evolve.Command": ""
+  "Evolve.Command": "migrate"
 }
